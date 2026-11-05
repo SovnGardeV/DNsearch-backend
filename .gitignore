@@ -1,0 +1,30 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+build/
+
+# env / secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# logs
+logs/
+*.log
+npm-debug.log*
+
+# editor / os
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# cache
+.cache/
+.npm-cache/
+.tsbuildinfo
+coverage/

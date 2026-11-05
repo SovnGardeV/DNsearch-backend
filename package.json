@@ -1,0 +1,27 @@
+{
+  "name": "dnsearch-backend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "DNsearch backend service (Node.js + TypeScript + MySQL)",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "dev": "node --watch src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "db:check": "node src/scripts/check-db.ts"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "mysql2": "^3.15.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.9.1",
+    "typescript": "^5.9.3"
+  }
+}
