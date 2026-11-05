@@ -5,10 +5,10 @@ node_modules/
 dist/
 build/
 
-# env / secrets
+# env / secrets（.env* 一律忽略，只保留模板）
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
 *.pem
 *.key
 

@@ -133,6 +133,16 @@ curl "http://localhost:3000/dragonnest/items?q=武器&page=2&pageSize=10"
 | `npm start` | 运行编译后的 `dist/index.js` |
 | `npm run db:check` | 单独验证 MySQL 连接与版本 |
 
+## 部署
+
+生产环境用 Docker Compose + Nginx 部署，完整步骤（装 Docker、配安全组、HTTPS、升级回滚、排错）见 **[DEPLOY.md](DEPLOY.md)**。
+
+```bash
+cp deploy/env.production.example .env.production    # 填正式库密码
+docker compose up -d --build
+curl http://127.0.0.1:3000/api/health
+```
+
 ## 目录结构
 
 ```
@@ -154,6 +164,13 @@ src/
 │   └── check-db.ts             # 数据库连通性自检
 └── utils/
     └── http-error.ts           # HttpError 及快捷构造器
+
+Dockerfile                      # 多阶段构建（依赖 → 编译 → 运行时镜像）
+docker-compose.yml              # 生产编排（host 网络 + 环境变量注入 + 日志轮转）
+deploy/
+├── env.production.example      # 生产环境变量模板
+└── nginx-dnsearch.conf         # Nginx 反向代理配置
+DEPLOY.md                       # 部署手册
 ```
 
 ## 数据库用法
@@ -194,6 +211,7 @@ await withTransaction(async (conn) => {
 | 变量 | 默认值 | 说明 |
 | --- | --- | --- |
 | `NODE_ENV` | `development` | 决定连哪个库；`production` 时 5xx 错误只返回通用信息 |
+| `HOST` | `0.0.0.0` | 监听地址；`127.0.0.1` 表示只允许本机访问（配合 Nginx 反代） |
 | `PORT` | `3000` | HTTP 端口 |
 | `DB_HOST_DEV` | `47.106.37.94` | **开发/测试**库地址 |
 | `DB_HOST_PROD` | `127.0.0.1` | **正式**库地址 |

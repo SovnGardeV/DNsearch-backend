@@ -37,6 +37,8 @@ const dbHost = isProduction
 export const env = {
   nodeEnv,
   isProduction,
+  /** 监听地址：0.0.0.0 对外；127.0.0.1 只允许本机（配合 Nginx 反代）。 */
+  host: optional('HOST', '0.0.0.0'),
   port: port('PORT', 3000),
   db: {
     host: dbHost,

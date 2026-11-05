@@ -1,0 +1,29 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # 国内服务器构建慢时可以改成 https://registry.npmmirror.com
+        NPM_REGISTRY: ${NPM_REGISTRY:-https://registry.npmjs.org}
+    image: dnsearch-backend:latest
+    container_name: dnsearch-backend
+    restart: unless-stopped
+    init: true
+
+    # 复用宿主机网络：容器里的 127.0.0.1 就是服务器本机。
+    # 正式库 MySQL 跑在同一台机器上，所以生产配置里的 DB_HOST_PROD=127.0.0.1 可以直连，
+    # 不需要改 MySQL 的 bind-address，也不用额外配 host.docker.internal。
+    network_mode: host
+
+    env_file:
+      - .env.production
+    environment:
+      # 显式压过 env_file：确保连的是本机正式库，而不是远程测试库
+      NODE_ENV: production
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

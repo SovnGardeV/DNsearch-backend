@@ -15,8 +15,9 @@ async function main(): Promise<void> {
     );
   }
 
-  const server = app.listen(env.port, () => {
-    console.log(`[http] 服务已启动：http://localhost:${env.port} (${env.nodeEnv})`);
+  const server = app.listen(env.port, env.host, () => {
+    const shown = env.host === '0.0.0.0' ? 'localhost' : env.host;
+    console.log(`[http] 服务已启动：http://${shown}:${env.port} (${env.nodeEnv})`);
   });
 
   let shuttingDown = false;

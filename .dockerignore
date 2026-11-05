@@ -1,0 +1,20 @@
+# 构建镜像时排除的内容（.env.production 由 docker compose 在运行期注入，不打进镜像）
+node_modules/
+dist/
+.git/
+.gitignore
+.gitattributes
+.env
+.env.*
+.npm-cache/
+.cache/
+coverage/
+*.log
+npm-debug.log*
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+README.md
+DEPLOY.md
+deploy/
